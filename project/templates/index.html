@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="templates/css/style.css">
+    <title>Clouise&Cnails</title>
+</head>
+<body>
+    <form action="#" class="login">
+        <label for="login-name">Login:</label>
+        <div class="form_border login">
+            <input type="text" id="login">
+        </div>
+        <p class="error_form login">Incorrect login</p>
+        <label for="login-pw">Password:</label>
+        <div class="form_border password">
+            <input type="password" id="password">
+        </div>
+        <p class="error_form password">Incorrect password</p>
+        <p class="error_form wrong_data">Wrong login or password</p>
+        <a href="signin.php" class="registr">Create new account</a>
+        <button>Войти</button>
+    </form>
+    <script src="templates/js/script.js"></script>
+    <script>
+        ValidateForm({
+            action: "login"
+        });
+    </script>
+</body>
+</html>

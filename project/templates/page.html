@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clouise&Cnails</title>
+    <link rel="stylesheet" href="templates/css/style.css">
+</head>
+<body>
+    <a href="market.php" class="market">Market</a>
+    <!-- <a href="market.php" class="market">Market</a> -->
+    <div class="user_info">
+        <p class="user_name">name</p>
+            <p>Balance:</p>
+        <p class="user_sum">0</p>
+    </div>
+    <div class="container">
+        <form class="form_money" onsubmit="return false">
+            <input type="number" class="append_money" min="10" max="1000000">
+            <button class="append_money">Append some money</button>
+        </form>
+    </div>
+    <script src="templates/js/script.js"></script>
+    <script>
+        document.querySelector(".header").appendChild(document.querySelector(".market"));
+        function set_info() {
+            SendRequest("get", "user.php", "", function (res) {
+                console.log(res.response);
+                var data = JSON.parse(res.response);
+                if (data !== false) {
+                    if (data['money'])
+                        document.querySelector(".user_sum").innerHTML = data['money'];
+                    if (data['login'])
+                        document.querySelector(".user_name").innerHTML = data['login'];
+                }
+            });
+        }
+        set_info();
+        document.addEventListener('click', function(event) {
+            if (event.target.tagName === "BUTTON") {
+                var sum = document.querySelector(".append_money").value;
+                if (sum) {
+                    SendRequest("get", "set_money.php", "sum=" + sum, function (res) {
+                        res = JSON.parse(res.response);
+                        if (res) {
+                            var old_sum = Number.parseInt(document.querySelector(".user_sum").innerHTML);
+                            document.querySelector(".user_sum").innerHTML = (old_sum ? old_sum : 0) + Number.parseInt(sum);
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

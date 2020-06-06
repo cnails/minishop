@@ -1,0 +1,128 @@
+.header {
+    width: 100%;
+    height: 100px;
+    background-color: aqua;
+    text-align: center;
+    letter-spacing: 10px;
+    color: #fff;
+    padding-top: 30px;
+    position: relative;
+    /* display: flex; */
+    /* vertical-align: middle; */
+}
+
+.container {
+    width: 1440px;
+}
+
+body {
+    height: 600px;
+}
+
+.footer {
+    width: 100%;
+    height: 70px;
+    background-color: red;
+    font-style: italic;
+    font-family: monospace;
+    padding-top: 20px;
+}
+
+.info {
+    color: #fff;
+    /* margin-top: 20px; */
+    margin-right: 20px;
+}
+
+.form_border {
+    border: 3px solid aqua;
+    border-radius: 5px;
+    width: 220px;
+}
+
+.form_border.error {
+    border-color: red;
+}
+
+input {
+    width: 100%;
+}
+
+form.login {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    height: 220px;
+    width: 400px;
+    border: 3px solid aqua;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login.error {
+    border-color: red;
+}
+
+p {
+    margin: 0;
+}
+
+body {
+    text-align: center;
+}
+
+.error_form {
+    display: none;
+    color: red;
+}
+
+.display {
+    display: block;
+}
+
+a#user_info {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.user_info {
+    display: inline-block;
+    width: 300px;
+    height: 70px;
+    margin-top: 20px;
+    margin-right: 20px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.form_money {
+    height: 100px;
+    width: 200px;
+    border: 3px solid aqua;
+    flex-direction: column;
+    justify-content: center;
+    display: inline-flex;
+    border-radius: 5px;
+    align-items: center;
+    margin-top: 15px;
+}
+
+input.append_money {
+    width: 70%;
+}
+
+button.append_money {
+    width: 70%;
+    font-size: small;
+    margin-top: 5px;
+}
+
+.container {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
