@@ -1,0 +1,69 @@
+.card {
+    font-family: 'Montserrat', sans-serif;
+    width: 200px;
+    height: 240px;
+    background: linear-gradient(240deg, #808080, #e6e6e6);
+    border-radius: 20px;
+    position: relative;
+    text-transform: uppercase;
+    margin-top: 120px;
+    margin-left: 30px;
+}
+
+.card .price {
+    position: absolute;
+    right: 0;
+    bottom: 100px;
+    width: 120px;
+    height: 200px;
+    border-radius: 20px 20px 0 20px;
+    transform: skewy(40deg);
+    background: linear-gradient(45deg, #ed1c24, #fcee21);
+    /* background: linear-gradient(45deg, #bo66fe, #); */
+}
+.card .price span {
+    position: absolute;
+    top: 130px;
+    left: 40px;
+    font-size: 28px;
+    color: #fff;
+    font-weight: 700;
+    transform: skewY(-40deg);
+}
+
+.card .picture {
+    text-align: center;
+}
+
+.card .picture img {
+    position: relative;
+    width: 110px;
+    top: -60px;
+    z-index: 1;
+}
+
+.card .info {
+    position: absolute;
+    top: 40%;
+    left: 10%;
+}
+
+.card .info .icon {
+    font-size: 12px;
+    color: #606060;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 1px;
+    position: absolute;
+    top: 22px;
+}
+
+.name {
+    font-size: 14px;
+    color: #606060;
+    font-weight: 600;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    max-width: 80px;
+}

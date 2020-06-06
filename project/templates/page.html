@@ -25,8 +25,8 @@
         document.querySelector(".header").appendChild(document.querySelector(".market"));
         function set_info() {
             SendRequest("get", "user.php", "", function (res) {
-                console.log(res.response);
                 var data = JSON.parse(res.response);
+                console.log(res.response);
                 if (data !== false) {
                     if (data['money'])
                         document.querySelector(".user_sum").innerHTML = data['money'];
@@ -39,7 +39,7 @@
         document.addEventListener('click', function(event) {
             if (event.target.tagName === "BUTTON") {
                 var sum = document.querySelector(".append_money").value;
-                if (sum) {
+                if (sum > 0 && sum < 1000000) {
                     SendRequest("get", "set_money.php", "sum=" + sum, function (res) {
                         res = JSON.parse(res.response);
                         if (res) {

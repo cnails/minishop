@@ -140,7 +140,7 @@ function Login(login, password) {
 }
 
 function Registr(login, password) {
-    var req = SendRequest("get", "registr.php", "login=" + login + "&" + "passwd=" + password, function (res) {
+    SendRequest("get", "registr.php", "login=" + login + "&" + "passwd=" + password, function (res) {
         console.log(res.response);
         if (res.response === "true") {
             window.location.replace("market.php");

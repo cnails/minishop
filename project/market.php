@@ -5,6 +5,7 @@
     } else {
         readfile("templates/header.html");
         readfile("templates/market.html");
+        readfile("templates/products.html");
         readfile("templates/footer.html");
     }
 ?>
