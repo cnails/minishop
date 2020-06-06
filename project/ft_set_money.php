@@ -10,8 +10,14 @@
                     break;
                 }
             }
-            if ($tmp_user === -1) 
-                return json_decode(false);
+            if ($tmp_user === -1) {
+                $user['login'] = $login;
+                $user['sum'] = $sum;
+                $data[] = $user;
+                file_put_contents("../private/users", serialize($data));
+                return json_decode(true);
+            }
+                // return json_decode(false);
             $data[$tmp_user]['login'] = $data[$tmp_user]['login'];
             $data[$tmp_user]['sum'] = $data[$tmp_user]['sum'] + $sum;
             file_put_contents("../private/users", serialize($data));
