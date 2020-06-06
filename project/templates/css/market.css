@@ -37,8 +37,8 @@
 
 .card .picture img {
     position: relative;
-    width: 110px;
-    top: -60px;
+    width: 140px;
+    top: -70px;
     z-index: 1;
 }
 
@@ -66,4 +66,72 @@
     bottom: 20px;
     left: 20px;
     max-width: 80px;
+}
+
+/* 
+** checkbox
+*/
+
+.check input {
+    display: none;
+}
+
+.check label {
+    display: inline-block;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 10px;
+    right: 8px;
+    /* width */
+    width: 65px;
+    height: 32px;
+    /* padding */
+    padding: 2px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .6) inset;
+    border-radius: 65px;
+    cursor: pointer;
+    background: linear-gradient(to right, #ed1c24 0, #ff5a2f 45%, #7fd03e 55%, #009e00 100%) 0 0;
+    /* width */
+    background-size: 180px 100%;
+    /* background-size: ((300px * 2) + 50px) 100%; */
+    transition: .3s ease;
+}
+
+.check label:before {
+    display: inline-block;
+    position: absolute;
+    content: "off";
+    font-family: 'Montserrat', sans-serif;
+    /* btnSize */
+    width: 25px;
+    /* padding */
+    left: 3px;
+    top: 3px;
+    background: radial-gradient(#fff, #f0f0f0);
+    border-radius: 100%;
+    text-align: center;
+    /* btnSize */
+    line-height: 25px;
+    font-size: 10px;
+    color: #ed1c24;
+    text-transform: uppercase;
+    transition: left .3s ease, color .3s ease;
+}
+
+.check label:before:active:before {
+    transform: scale(0.9);
+} 
+
+input:checked + label {
+    /* width */
+    background-position-x: -115px;
+    /* background-position-x: -(300px + 50); */
+}
+
+input:checked + label:before {
+    content: "on";
+    color: #009e00;
+    /* width btnSize padding */
+    left: 38px;
+    /* left: 300px - 116px - 7px; */
 }
