@@ -78,17 +78,37 @@ input {
     align-items: center;
 }
 .form form.login {
-    min-height: 220px;
+    position: relative;
+    overflow: hidden;
+    transition: 0.8s;
+    height: 250px;
     width: 400px;
     border: 1px solid white;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     background-image: linear-gradient(to right, rgba(98, 0, 255, 0.1) , rgba(255, 72, 0, 0.1) ) ;
-    
 
+}
+.form form.login.error{
+    height: 270px;
+}
+.form form.login a{
+    text-decoration: none;
+    color: white;
+    margin-top: 20px;
+    transition: 0.5s;
+    width: 150px;
+    height: 20px;
+    border-radius: 20px;
+    border: 1px solid white;
+    
+}
+.form form.login a:hover{
+    background: linear-gradient(to right, rgba(98, 0, 255, 0.8) , rgba(255, 72, 0, 0.8) );
+    border: none;
+    box-shadow: 1px 1px black;
 }
 .form form.login label{
     color: white;
@@ -101,6 +121,25 @@ input {
     padding: 2px 20px 2px 20px;
     transition: 0.5s;
     margin: 2px 0 0 0;
+}
+.form form.login .btn {
+    display: inline-block;
+    background: linear-gradient(to right, rgba(98, 0, 255, 0.1) , rgba(255, 72, 0, 0.1) );
+    font-size: 16px;
+    color: #fff;
+    border-radius: 10px;
+    padding: 2px 10px 2px 10px ;
+    transition: 0.5s;
+    border: solid 1px white;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.form form.login .btn:hover {
+    background: linear-gradient(to right, rgba(98, 0, 255, 0.8) , rgba(255, 72, 0, 0.8) );
+    border: none;
+    box-shadow: 1px 1px black;
+
 }
 .form form.login input:hover{
     width: 270px;
@@ -122,10 +161,13 @@ body {
 .error_form {
     display: none;
     color: white;
+    left: -100%;
+    transition: 0.5s;
 }
 
 .display {
     display: block;
+    left: 20px;
 }
 
 a#user_info {
