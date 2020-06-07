@@ -67,7 +67,7 @@
                 console.log(data);
                 if (data !== false) {
                     if (data['money'])
-                        document.querySelector(".user_sum").innerHTML = data['money'];
+                        document.querySelector(".user_sum").innerHTML = data['money'] + "$";
                     if (data['login'])
                         document.querySelector(".user_name").innerHTML = data['login'];
                 }
@@ -82,7 +82,7 @@
                         res = JSON.parse(res.response);
                         if (res) {
                             var old_sum = Number.parseInt(document.querySelector(".user_sum").innerHTML);
-                            document.querySelector(".user_sum").innerHTML = (old_sum ? old_sum : 0) + Number.parseInt(sum);
+                            document.querySelector(".user_sum").innerHTML = (old_sum ? old_sum : 0) + Number.parseInt(sum) + "$";
                         }
                     });
                 }

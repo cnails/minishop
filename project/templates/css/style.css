@@ -253,6 +253,11 @@ img {
     margin-bottom: 15px;
 }
 
+.orders {
+    width: 80%;
+    transform: translateX(10%);
+}
+
 .order {
     min-width: 400px;
     height: 60px;
@@ -283,3 +288,8 @@ img {
     margin-left: 20px;
 }
 
+.logout {
+    position: absolute;
+    left: 40px;
+    top: 40px;
+}
