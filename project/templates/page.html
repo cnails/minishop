@@ -4,16 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clouise&Cnails</title>
+    <link rel="stylesheet" href="templates/css/market.css">
     <link rel="stylesheet" href="templates/css/style.css">
 </head>
 <body>
-    <a href="market.php" class="market">Market</a>
+    <a href="market.php" class="swap_page">Market</a>
     <!-- <a href="market.php" class="market">Market</a> -->
     <div class="user_info">
         <p class="user_name">name</p>
             <p>Balance:</p>
         <p class="user_sum">0</p>
     </div>
+    <a href="basket.php" class="basket_link">
+        <div class="basket_menu">
+            <div class="basket">
+                <img src="img/basket.svg" alt="backet">
+            </div>
+            <div class="number">
+                <div class="qty">
+                    Quantity: <span>0</span>
+                </div>
+                <div class="sum">
+                    Sum: <span>0</span>$
+                </div>
+            </div>
+        </div>
+    </a>
     <div class="container">
         <form class="form_money" onsubmit="return false">
             <input type="number" class="append_money" min="10" max="1000000">
@@ -22,11 +38,33 @@
     </div>
     <script src="templates/js/script.js"></script>
     <script>
-        document.querySelector(".header").appendChild(document.querySelector(".market"));
+        var products = null;
+        SendRequest("get", "get_products.php", "", function (res) {
+            products = JSON.parse(res.response);
+        });
+        SendRequest("get", "get_cart.php", "", function (res) {
+            var cart = JSON.parse(res.response);
+            console.log(cart);
+            console.log(products);
+            if (cart[0]) {
+                var sum = 0;
+                for (var index = 0; index < cart.length; index++) {
+                    for (el in products) {
+                        pr = products[el];
+                        if (pr['ind'] == cart[index]) {
+                            sum += Number.parseInt(pr['price']);
+                            break;
+                        }
+                    }
+                }
+                document.querySelector(".qty span").innerHTML = cart.length;
+                document.querySelector(".sum span").innerHTML = sum;
+            }
+        });
         function set_info() {
             SendRequest("get", "user.php", "", function (res) {
                 var data = JSON.parse(res.response);
-                console.log(res.response);
+                console.log(data);
                 if (data !== false) {
                     if (data['money'])
                         document.querySelector(".user_sum").innerHTML = data['money'];

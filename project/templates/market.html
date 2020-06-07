@@ -10,22 +10,19 @@
 </head>
 <body>
     <a href="page.php" id="user_info">
-        <div class="user_info">
+        <div class="user_info mark">
             <p class="user_name">name</p>
-            <p>Balance:</p>
-            <p class="user_sum">0</p>
+            <p>Balance: <span class="user_sum">0</span>$</p>
         </div>
     </a>
     <script src="templates/js/script.js"></script>
     <script>
 
-        var tmp = document.querySelector("#user_info");
-        document.querySelector(".header").appendChild(tmp);
+        document.querySelector(".header").appendChild(document.querySelector("#user_info"));
         // document.querySelector("body").removeChild(tmp);
         
         function set_info() {
             SendRequest("get", "user.php", "", function (res) {
-                console.log(res.response);
                 var data = JSON.parse(res.response);
                 if (data !== false) {
                     if (data['money'])

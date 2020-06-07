@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Append product</title>
+    <script src="templates/js/script.js"></script>
+    <link rel="stylesheet" href="templates/css/style.css">
+    <link rel="stylesheet" href="templates/css/market.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <a href="market.php" class="swap_page">Market</a>
+    <div class="container">
+        <div class="form">
+            <form action="#" class="append login">
+                <label for="login-name">Name:</label>
+                <div class="form_border login">
+                    <input type="text" id="name" maxlength="15">
+                </div>
+                <label for="login-name">Category:</label>
+                <div class="form_border password">
+                    <input type="text" id="category" maxlength="15">
+                </div>
+                <label for="login-name">Price:</label>
+                <div class="form_border password">
+                    <input type="number" id="price" min="10" max="9999">
+                </div>
+                <label for="login-name">Src:</label>
+                <div class="form_border password">
+                    <input type="text" id="src">
+                </div>
+                <button class="btn">Append</button>
+            </form>
+        </div>
+    </div>
+    <div class="products">
+
+    </div>
+    <script>
+        SendRequest("get", "get_products.php", "", function (res) {
+            res = JSON.parse(res.response);
+            if (res) {
+                var len = Object.keys(res).length;
+                for (var ind = 0; ind < len; ind++) {
+                    create_cart(res[ind].ind, res[ind].price, res[ind].category, res[ind].item, res[ind].image, true);
+                }
+            }
+        });
+        function validURL(str) {
+            var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+                '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+                '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+                '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+                '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+                '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+                return !!pattern.test(str);
+        }
+        document.addEventListener('click', function(event) {
+            if (event.target.tagName === "BUTTON") {
+            event.preventDefault();
+            var name_pr = document.querySelector("#name").value;
+            var category = document.querySelector("#category").value;
+            var src = document.querySelector("#src").value;
+            var price = Number.parseInt(document.querySelector("#price").value);
+            if (/^[a-zA-Z0-9]+$/.test(name_pr) !== false && name_pr.length > 2 &&
+                /^[a-zA-Z0-9]+$/.test(category) !== false && category.length > 2 &&
+                (validURL(src) || src.startsWith("img/")) && price >= 10 && price <= 9999) {
+                    SendRequest("get", "append_product.php",  "item=" + name_pr + "&" + "image="+src + "&"+ "category=" + category + "&" + "price=" +price +"&"+ "local=" + src.startsWith("img/"), function (res) {
+                        res = JSON.parse(res.response);
+                        if (res !== false) {
+                            create_cart(res, price, category, name_pr, src, true);
+                        } else {
+                            console.log("invalid property");
+                        }
+                    });
+            } else {
+                console.log("invalid property");
+            }
+        }
+        if (event.target.tagName === "INPUT" && event.target.getAttribute("type") === "checkbox") {
+            var id = event.target.getAttribute("id").split('_')[1];
+            SendRequest("get", "delete_product.php", "id=" + id, function (res) {
+                res = JSON.parse(res.response);
+                if (res)
+                    document.querySelector(".products").removeChild(document.querySelector("#card_" + id));
+            });
+        }
+        
+    });
+    </script>
+</body>
+</html>

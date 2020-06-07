@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basket</title>
+    <script src="templates/js/script.js"></script>
+    <link rel="stylesheet" href="templates/css/style.css">
+    <link rel="stylesheet" href="templates/css/market.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <a href="market.php" class="swap_page">Market</a>
+    <a href="page.php" id="user_info">
+        <div class="user_info mark">
+            <p class="user_name">name</p>
+            <p>Balance: <span class="user_sum">0</span>$</p>
+        </div>
+    </a>
+    <div class="checkout">
+        <div class="total number">
+            <div class="qty">Quantity: <span>0</span></div>
+            <div class="sum">Total sum: <span>0</span>$</div>
+        </div>
+        <div class="buts">
+            <div class="cancel">
+                <button class="cancel_btn">Cancel</button>
+            </div>
+            <div class="submit">
+                <button class="submit_btn">Submit</button>
+            </div>
+        </div>
+    </div>
+    <div class="products">
+    </div>
+    <script>
+    document.querySelector(".header").appendChild(document.querySelector("#user_info"));
+    var prices = {};
+    var products = {};
+    SendRequest("get", "get_products.php", "", function (res) {
+        res = JSON.parse(res.response);
+        products = res;
+    });
+    SendRequest("get", "user.php", "", function (res) {
+        var data = JSON.parse(res.response);
+        if (data !== false) {
+            if (data['money'])
+                document.querySelector(".user_sum").innerHTML = data['money'];
+            if (data['login'])
+                document.querySelector(".user_name").innerHTML = data['login'];
+        }
+    });
+    SendRequest("get", "get_cart.php", "", function (res) {
+        var cart = JSON.parse(res.response);
+        console.log(cart);
+        console.log(products);
+        if (cart[0] !== null) {
+            var sum = 0;
+            for (var index = 0; index < cart.length; index++) {
+                for (el in products) {
+                    pr = products[el];
+                    if (pr['ind'] == cart[index]) {
+                        create_cart(pr.ind, pr.price, pr.category, pr.item, pr.image, true);
+                        sum += Number.parseInt(pr.price);
+                        break;
+                    }
+                }
+            }
+            document.querySelector(".qty span").innerHTML = (cart.length ? cart.length : 0) ;
+            document.querySelector(".sum span").innerHTML = sum;
+        }
+    });
+    document.addEventListener('click', function(event) {
+        if (event.target.tagName === "BUTTON") {
+            var sum = document.querySelector(".sum span").innerHTML;
+            if (sum > Number.parseInt(document.querySelector(".user_info span").innerHTML)) {
+                console.log("not enough money");
+                // document.
+            } else {
+                SendRequest("get", "set_money.php", "sum=-" + sum, function (res) {});
+                SendRequest("get", "checkout.php", "", function (res) {});
+                document.querySelector(".user_info span").innerHTML = Number.parseInt(document.querySelector(".user_info span").innerHTML) - Number.parseInt(document.querySelector(".sum span").innerHTML)
+                // document.querySelector(".total").style.backgroundColor = "0, 0, 0, 0.4";
+            }
+        }
+        if (event.target.tagName === "INPUT") {
+            document.querySelector(".number").style.animation = "";
+            var id = event.target.getAttribute("id").split('_')[1];
+            SendRequest("get", "delete_from_cart.php", "id=" + id, function (res) {
+                console.log(res);
+                if (res.response == "true") {
+                    console.log("here");
+                    var sum = document.querySelector("#card_" + id + " span").innerHTML;
+                    var basket_sum = Number.parseInt(document.querySelector(".sum span").innerHTML);
+                    var basket_qty = Number.parseInt(document.querySelector(".qty span").innerHTML);
+                    document.querySelector(".qty span").innerHTML = basket_qty - 1;
+                    document.querySelector(".sum span").innerHTML = basket_sum - Number.parseInt(sum);
+                    document.querySelector(".number").style.animation = "red 1s forwards";
+                    document.querySelector(".products").removeChild(document.querySelector("#card_" + id));
+                }
+            });
+        }
+    });
+    </script>
+</body>
+</html>

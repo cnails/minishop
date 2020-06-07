@@ -52,7 +52,6 @@ function SendRequest(r_method, r_path, r_args, r_handler)
         //Если обмен данными завершен
         if (Request.readyState == 4)
         {
-            //Передаем управление обработчику пользователя
             r_handler(Request);
         }
     }
@@ -121,7 +120,6 @@ function ValidateForm(cls) {
             }
         }
         if (event.target.tagName === "A") {
-            console.log(event.target.getAttribute("href"));
             window.location.replace(event.target.getAttribute("href"));
         }
         
@@ -130,7 +128,6 @@ function ValidateForm(cls) {
 
 function Login(login, password) {
     var req = SendRequest("get", "login.php", "login=" + login + "&" + "passwd=" + password, function (res) {
-        console.log(res);
         if (res.response === "true") {
             window.location.replace("market.php");
         } else {
@@ -141,7 +138,6 @@ function Login(login, password) {
 
 function Registr(login, password) {
     SendRequest("get", "registr.php", "login=" + login + "&" + "passwd=" + password, function (res) {
-        console.log(res.response);
         if (res.response === "true") {
             window.location.replace("market.php");
         } else {
@@ -149,4 +145,47 @@ function Registr(login, password) {
             document.querySelector('.error_form.unvailable').classList.add("display");
         }
     });
+}
+
+function create_cart(i, price, category, name_pr, src, del) {
+    var check = document.createElement("div");
+    if (del)
+        check.classList.add("delete");
+    else 
+        check.classList.add("check");
+    var checkbox = document.createElement("input");
+    checkbox.setAttribute("type", "checkbox");
+    checkbox.setAttribute("id", "check_" + i);
+    var label = document.createElement("label");
+    label.setAttribute("for", "check_" + i);
+    var name = document.createElement("div");
+    name.classList.add("name");
+    name.innerHTML = (name_pr ? name_pr : "product")
+    var info = document.createElement("div");
+    info.classList.add("info");
+    var info_icon = document.createElement("div");
+    info_icon.classList.add("icon");
+    info_icon.innerHTML = "Category: " + (category ? category : "none");
+    var price_span = document.createElement("span");
+    price_span.innerHTML = price + "$";
+    var price = document.createElement("div");
+    price.classList.add("price");
+    var picture_img = document.createElement("img");
+    picture_img.setAttribute("src", src);
+    var picture = document.createElement("div");
+    picture.classList.add("picture");
+    var card = document.createElement("div");
+    card.setAttribute("id", "card_" + i);
+    card.classList.add("card");
+    check.appendChild(checkbox);
+    check.appendChild(label);
+    info.appendChild(info_icon);
+    picture.appendChild(picture_img);
+    price.appendChild(price_span);
+    card.appendChild(picture);
+    card.appendChild(info);
+    card.appendChild(price);
+    card.appendChild(name);
+    card.appendChild(check);
+    document.querySelector(".products").appendChild(card);
 }
