@@ -10,6 +10,50 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    
+    <div class="orders">
+
+    </div>
+<script>
+        function create_order(name, _qty, _sum) {
+            var user_name = document.createElement("div");
+            var sum = document.createElement("div");
+            var qty = document.createElement("div");
+            var order = document.createElement("div");
+            sum.innerHTML = "total: " + _sum + "$";
+            qty.innerHTML = "quantity: " + _qty;
+            user_name.innerHTML = name;
+            order.classList.add("order");
+            user_name.classList.add("user_name");
+            sum.classList.add("sum");
+            qty.classList.add("qty");
+            order.appendChild(user_name);
+            order.appendChild(qty);
+            order.appendChild(sum);
+            document.querySelector(".orders").appendChild(order);
+        }
+        SendRequest("get", "get_products.php", "", function (res) {
+            products = JSON.parse(res.response);
+        });
+        SendRequest("get", "get_purchase.php", "", function (res) {
+            res = JSON.parse(res.response);
+            console.log(res);
+            var len = Object.keys(res).length;
+            for (var ind = 0; ind < len; ind++) {
+                var sum = 0;
+                var tmp_len = res[ind]['cart'].length;
+                console.log(tmp_len);
+                for (el in products) {
+                    prod = products[el];
+                    console.log(prod);
+                    for (var i = 0; i < tmp_len; i++) {
+                        if (prod['ind'] == res[ind]['cart'][i]) {
+                            sum += Number.parseInt(prod['price']);
+                        }
+                    }
+                }
+                create_order(res[ind]['login'], tmp_len, sum);
+            }
+        });
+    </script>
 </body>
 </html>
